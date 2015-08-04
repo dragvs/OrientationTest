@@ -22,6 +22,8 @@
 		579016991B6A49A2001C3D7C /* MagazineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 579016971B6A49A2001C3D7C /* MagazineViewController.xib */; };
 		57AD5F901B6FC35500D0472A /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57AD5F8E1B6FC35500D0472A /* Crashlytics.framework */; };
 		57AD5F911B6FC35500D0472A /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57AD5F8F1B6FC35500D0472A /* Fabric.framework */; };
+		57E4EFE81B70BEA8003E7166 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57E4EFE71B70BEA8003E7166 /* GameKit.framework */; };
+		57E4EFEA1B70BEB7003E7166 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57E4EFE91B70BEB7003E7166 /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,8 @@
 		579016971B6A49A2001C3D7C /* MagazineViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MagazineViewController.xib; sourceTree = "<group>"; };
 		57AD5F8E1B6FC35500D0472A /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = libs/Crashlytics.framework; sourceTree = "<group>"; };
 		57AD5F8F1B6FC35500D0472A /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = libs/Fabric.framework; sourceTree = "<group>"; };
+		57E4EFE71B70BEA8003E7166 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		57E4EFE91B70BEB7003E7166 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,8 +71,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57E4EFE81B70BEA8003E7166 /* GameKit.framework in Frameworks */,
 				57AD5F901B6FC35500D0472A /* Crashlytics.framework in Frameworks */,
 				57AD5F911B6FC35500D0472A /* Fabric.framework in Frameworks */,
+				57E4EFEA1B70BEB7003E7166 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,6 +177,8 @@
 		57AD5F8B1B6FC30100D0472A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				57E4EFE91B70BEB7003E7166 /* StoreKit.framework */,
+				57E4EFE71B70BEA8003E7166 /* GameKit.framework */,
 				57AD5F8E1B6FC35500D0472A /* Crashlytics.framework */,
 				57AD5F8F1B6FC35500D0472A /* Fabric.framework */,
 			);
@@ -228,6 +236,14 @@
 					5790164E1B6A3A79001C3D7C = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = SBG944P68M;
+						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 1;
+							};
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+						};
 					};
 					579016671B6A3A79001C3D7C = {
 						CreatedOnToolsVersion = 6.4;
@@ -424,6 +440,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/libs",
@@ -431,6 +448,7 @@
 				INFOPLIST_FILE = OrientationTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -439,6 +457,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/libs",
@@ -446,6 +465,7 @@
 				INFOPLIST_FILE = OrientationTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
