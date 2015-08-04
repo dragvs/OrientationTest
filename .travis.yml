@@ -5,8 +5,8 @@ before_script:
 - openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/certs/dev.p12.enc -d -a -out scripts/certs/dev.p12
 - ./scripts/import-keys.sh
 script:
-- xcodebuild -project OrientationTest.xcodeproj -scheme OrientationTest 
-  -configuration Debug -sdk iphoneos ONLY_ACTIVE_ARCH=NO | xcpretty -c && exit ${PIPESTATUS[0]}
+- set -o pipefail && xcodebuild -project OrientationTest.xcodeproj -scheme OrientationTest 
+  -configuration Debug -sdk iphoneos ONLY_ACTIVE_ARCH=NO | xcpretty -c
 after_success:
 - xcrun -log -sdk iphoneos PackageApplication "$BUILD_OUTDIR/$APP_NAME.app" -o "$BUILD_OUTDIR/$APP_NAME.ipa" -sign "$DEVELOPER_NAME" -embed "$PWD/$APP_ID.mobileprovision"
 after_script:
@@ -18,6 +18,7 @@ env:
   global:
   - APP_ID=com.dragvs.OrientationTest
   - APP_NAME=OrientationTest
+  - APP_TITLE="Orientation Test"
   - 'SIGNING_IDENTITY="iPhone Developer: Shishov Shishov (483TG37L8F)"'
   - BUILD_OUTDIR="$PWD/build/Debug-iphoneos"
   - secure: VL6GhE2qBdFHS41g2wiw6NpyjppNoQt8dt4esC2WHWOvqxsWFPMkvPcxm1yTf67a9lwsCbFRmnWjORL6bwxaXnLJkSaFucCSu0PHJQGS9DQWyXjB7JrC8VYZ0tdZhabb6lxxvPt6QnpTNVHf4q7VygpwzrTItgO6vrsBrq1EVfbKUkXaMJfZ1JOBjc3W6c+YBCbmZEgQ63YSbsLoC/lt4D+upIBrQ6RqZN1TtVFXn28gBsT86MB8s6F0M0TEq6zmIqPaG+s4vvrUn2nlb6VP6uxeuCR6bYA8sG9tUntCrpQEN/89V0+8vPF01DUBIWYKHimBSRAXd7+MVmx0M0V7UjfMwMIAbRMFQpQeXEjnmz057lMq8pzxkqFvrAXVZKa5tI/tsauTyJhh18R1FXsZri3SknzEcLqU82JgJoFKsgYiqYCnxswZBFDGtjWY0Ag/iJKn8uGzrva4BghcPTMS5J8AYTMi/sT0V02xTpI/y9UAPiPTSMiSRt6ABT2eiUW3LmbCxEsnnJXEFByIuj0ghv8/z5p8si2mXsBDrfXbFV90vchnjVXQ4zQPI5RbdWUwmpM+iXQtekk2GeCqiJq3Zx92YY0uyp5aIvQXzgu/YZEMPiT4jJdp/2yOUlwaW+WHnAyTUMVuCi7jpUMGu9bgjrW988LHl64NCk3PR51VAuA=

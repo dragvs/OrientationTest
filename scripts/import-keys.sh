@@ -24,6 +24,9 @@ security import ./scripts/certs/dev.p12 -k ~/Library/Keychains/$KEYCHAIN_NAME -P
 #
 # Put the provisioning profile in place
 export DELIVER_PASSWORD=$APPLE_PASSWORD && export FASTLANE_DONT_STORE_PASSWORD=_ \
+	&& produce -u $APPLE_ID --app_identifier $APP_ID --app_name $APP_TITLE --app_version "1.0"
+
+export DELIVER_PASSWORD=$APPLE_PASSWORD && export FASTLANE_DONT_STORE_PASSWORD=_ \
 	&& sigh --development -u $APPLE_ID --app_identifier $APP_ID --filename $APP_ID.mobileprovision --skip_install
 
 mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
