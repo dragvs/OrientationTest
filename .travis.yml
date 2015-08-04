@@ -1,9 +1,19 @@
 language: objective-c
 osx_image: xcode6.4
-# podfile: src/OV/Podfile
+# podfile: Podfile
+before_script:
+- openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/certs/dev.cer.enc -d -a -out scripts/certs/dev.cer
+- openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/certs/dev.p12.enc -d -a -out scripts/certs/dev.p12
+- ./scripts/import-keys.sh
 script:
-- xcodebuild -project OrientationTest.xcodeproj -scheme OrientationTest 
-  -configuration Debug -sdk iphoneos ONLY_ACTIVE_ARCH=NO | xcpretty -c && exit ${PIPESTATUS[0]}
+- xcodebuild -project OrientationTest.xcodeproj -scheme OrientationTest -configuration
+  Debug -sdk iphoneos ONLY_ACTIVE_ARCH=NO | xcpretty -c && exit ${PIPESTATUS[0]}
+after_script:
+- ./scripts/remove-keys.sh
 notifications:
   email:
-  - dragvs@gmail.com
+  - dragvsdevacc1@gmail.com
+env:
+  global:
+  - secure: VL6GhE2qBdFHS41g2wiw6NpyjppNoQt8dt4esC2WHWOvqxsWFPMkvPcxm1yTf67a9lwsCbFRmnWjORL6bwxaXnLJkSaFucCSu0PHJQGS9DQWyXjB7JrC8VYZ0tdZhabb6lxxvPt6QnpTNVHf4q7VygpwzrTItgO6vrsBrq1EVfbKUkXaMJfZ1JOBjc3W6c+YBCbmZEgQ63YSbsLoC/lt4D+upIBrQ6RqZN1TtVFXn28gBsT86MB8s6F0M0TEq6zmIqPaG+s4vvrUn2nlb6VP6uxeuCR6bYA8sG9tUntCrpQEN/89V0+8vPF01DUBIWYKHimBSRAXd7+MVmx0M0V7UjfMwMIAbRMFQpQeXEjnmz057lMq8pzxkqFvrAXVZKa5tI/tsauTyJhh18R1FXsZri3SknzEcLqU82JgJoFKsgYiqYCnxswZBFDGtjWY0Ag/iJKn8uGzrva4BghcPTMS5J8AYTMi/sT0V02xTpI/y9UAPiPTSMiSRt6ABT2eiUW3LmbCxEsnnJXEFByIuj0ghv8/z5p8si2mXsBDrfXbFV90vchnjVXQ4zQPI5RbdWUwmpM+iXQtekk2GeCqiJq3Zx92YY0uyp5aIvQXzgu/YZEMPiT4jJdp/2yOUlwaW+WHnAyTUMVuCi7jpUMGu9bgjrW988LHl64NCk3PR51VAuA=
+  - secure: fNWxn+q90Eo6oGix4uPvxI8WzqlJnmC/gjOr07CbqB6LUuF5+mQuyjxZ9Nt3sw3Gct/xku4r/bXlkWbMvt+R0YwiaUGtlBrilnJD1FI94sj1g5i4UC5B3/APuEG4Sik49M02hyjdOrw7Xy7QaAsc/5VrGzNqmMJjyc7FqilOR4RxuYST+yXsGPQQgOrOjnFKMrwI5Fl+v5tRNivVqf8QdjWnFO5A+XcyVeYBfGdzHyJB1zo8tH7tdiXI5cTPVTcCcl7v3OQg7zw84JjCDsVMx7o3pqJml4fxs2MDeoyr8drE71Q8aeHxtkBtQ+x8iSv2KNQK2KAtjs0FG5kfi/0B3ik5KSrUBhLsQZ/I+gm01cEciDSI/UyCm1p7t6Uw6Q0Tj+YrC45S5c4JPgjZxUiM3iLkm6NQREItWuIX5d2qb3d9cK4IzptBwo6V2JZYQT6Bq6OMx1flmEW2Vn4/TexS3mgnmpbQGGvT06GyOyvMX7RrVowjPhYZeYnhC3HTxS++gI48UiVQS+3EyukbwdfdsyojKUd2eSV72ebcwWTfcg5g+Wg6c5fE7/XRniotTI4/TrJ3zH3cd+hAkg4Zs52ZpSUSXLUS2YnoUtirY61cIbaKKpl5gXtAgx/eqD7JPMA2aVc3c8BYxZV7SBpHowmCp/YAR0spob37AYWVoMplsCQ=
