@@ -1,0 +1,9 @@
+language: objective-c
+osx_image: xcode6.4
+# podfile: src/OV/Podfile
+script:
+- xcodebuild -project OrientationTest.xcodeproj -scheme OrientationTest 
+  -configuration Debug -sdk iphoneos ONLY_ACTIVE_ARCH=NO | xcpretty -c && exit ${PIPESTATUS[0]}
+notifications:
+  email:
+  - dragvs@gmail.com
