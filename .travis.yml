@@ -31,7 +31,6 @@ env:
 before_deploy:
 - zip -r $APP_ID.zip "$BUILD_OUTDIR"
 deploy:
-  skip_cleanup: true
   - provider: s3
     access_key_id: "AKIAJMYNLF4ZOI5BZVIQ"
     secret_access_key:
@@ -40,9 +39,11 @@ deploy:
     region: eu-central-1
     upload-dir: "travis-builds"
     local-dir: "$BUILD_OUTDIR"
+    skip_cleanup: true
     on:
       all_branches: true
   - provider: script
     script: ./libs/Crashlytics.framework/submit $FABRIC_API_KEY $FABRIC_BUILD_SECRET -ipaPath "$BUILD_OUTDIR/$APP_NAME.ipa"
+    skip_cleanup: true
     on:
       all_branches: true
