@@ -9,7 +9,6 @@ script:
   -configuration Debug -sdk iphoneos -derivedDataPath "$DERIVED_DATA_DIR" build ONLY_ACTIVE_ARCH=NO | xcpretty -c
 - xcrun -log -sdk iphoneos PackageApplication "$BUILD_OUTDIR/$APP_NAME.app" -o "$BUILD_OUTDIR/$APP_NAME.ipa"
   -s "$SIGNING_IDENTITY" -embed "$PWD/$APP_ID.mobileprovision"
-- ./libs/Crashlytics.framework/submit $FABRIC_API_KEY $FABRIC_BUILD_SECRET -ipaPath "$BUILD_OUTDIR/$APP_NAME.ipa"
 after_script:
 - ./scripts/remove-keys.sh
 notifications:
@@ -29,15 +28,21 @@ env:
   - secure: G3q8agCDOL7/mxufePYzKs5xd2IMtFS3flpYwyfy9I+ArDfFYzjOSJKF4Mlp87ZVQRSRZb3oSbaqA9H5L1LgI2/LsNUHUj8l9JX0W43S5Q35D3K4ocB1D0xC7w2do9nqwZErESLuTkLSNDuhPTF3El1qmGUiIRUEbISRm48+VKe/Yu2CWjZ9HQpd+/WO31Q0r1oY9qM8UUgI8fmB5gvZ8h+Vs90M5B8sc8QupwO9TjQHZr8jwFcJHPKlM24otS3PC9trfzL/us3XM+HsE5t8XsoJWVrNjCdf7vD+DorcuM3LyDuy0eCp+KbEM3S2nIr6Sdhe9y2CJqKK2LYTYprOCgSaWXEs/l8FFmyqpnZ9CAdbjIfcK1q4o4dJRN26s/hCUKal3d0OqQ/Tu+uJ7Cd7KARSDUXnsbQwPT+p+INDqyH3iSIQUi3OTThr1QooHnRNfh911ASXq1WALSdLUMBQK4eVb9zT0O4/E0lnaka/VxO9HGHhuEr5FqYp5tpgrPndc+gnvB9Jr9cevzW0wJ+gCo4vWs0LSnuVGGAGL7M40204Ni+tr8D00fspufj8SZsS46drxFPptbmOvkLAFDt/wRfDNsTD3BM+EIeMfneMl3U8PuPIjxsm0UmpW3fXfpgXbnMOxqVfZFe6hDt9XY44CqR+8zjXrAzVNQpI0jOZFiY=
   - secure: vXYX1mJ4wrJEkjv1LkJ8J8mOpELiXk1On2oGCXSY4FBDksGsJBMW4k0Uv6zkq7/v8YrzkDzl8f5MU2Aidtu7o8qrpLj0cyOr1m7f0aYJ7jpLHmzrYmoi6A0UCKxn68/M9fi5fBSf+Kz9zbLi8Z39Mw/UrVdKvuXpP3RH8rax09MmdrapJO+sENccrfM53eAKaWuFCyvf1QUOUxPBud4VVpyDz8NiLzI5gOVJR7aap8p4gn9ye8Wvw2kDLJ5Hz5KkmigeCYrzLm6HynFEJsSkscsTusojFVag7r+EOAlZEG0ml9vB5Ch0VLiXlaiyn5eepMZ2M83xRtaKH2uYG88FUzInsSlYs9upHH2H5ts0jg4/Nqzk7s6sEylIGH6QAv4e5Wcp3N4O4TmAtXv1j/PyGvN2N+dnvSV94BwqCw8L0TjkkheRCDHCsDzeI/1UCKdgAtHQMPBJyrN78WsGLZqu7WLYTAdjzNo7apHNuZUDhiRDW9h1UMZJXIddkD5VuP4ngLfEpMA6sOCWo4qrFVmGI23V89q1S3drzMFaRL2iLfyFJKd42F6UEdwrxROgG+30aG2FBG3TGCEiB+rkRQ6eqt+Q7xZIncCXiqxqX1don8rjwtyS0cptIKmURYU6XB+NXIkrp4ka8ArcwfvvkRwlaF1DLOgYzbUMRHF+4zYS948=
   - secure: OSCUwxJmtprv+pJ28hy4f7Dp/PzEBd1nd9CyoqyV5Xe9iPBxWIsVrYjlSy53xyy6v1GcveKRoUeDlVngbMRh8trnngxBNwjY1Qa4iAeiXe/nl8rut/JjlUUN9PxF6MYPdFIpkhQgD2CMN86Eb7irhJy8PxDkZ/QkwkSTj6blzVPrI1AEehTddeu9de9XxUEmAPd1Gxbru+2CFWk2AFuNSSxzQdPCjYPNGTJRmzq9C7mdRLRCIr636O9Wr5LfOoCL5N1Gykw9h6583lyNEx1R79+8+5d66elVwbUCRTAs5AM0vywGpF2NE7diod+alX7WtpfyfVk2dyvN/COiZsMyfgmA+P/7gW3xkrGRHpqvWfFHlDSRySKi/QX6beZYRo6+Wn9nvcBcsRUvk5x/GDyLF+/VFAaTSSjPz2vPW4s89IUJiodCyQLaj5QZCydBKizAMnH3JUQISNslZL17Jeq3ky3OUqAJcABBy/mk/XlvBtKSEAeykteeOKdzgJHaUX/f9E9Vg7hAfQ2ykT65+JcWyYUmtBjBk/6W+ZOAk3ND86CSQ/iqjxbFGqBcXKcvy80Gkvz4SiNCN5a6J8fkr+AAv39PWrJaM1f4ELtmL/phP/ZBCBJg1nUc+LtfnzrrnXZfwdE4IgCPKDet58sT9PMrxU8+eb+1aYWXV5xQUGfduTU=
+before_deploy:
+- zip -r $APP_ID.zip "$BUILD_OUTDIR"
 deploy:
-  provider: s3
-  access_key_id: "AKIAJMYNLF4ZOI5BZVIQ"
-  secret_access_key:
-    secure: DEvDLzrRuUiprXnSxeq4uQRb1LokqwY94Ko8OAhqhmePctddJEuT+hIg08kDfQdxDVX7NnmZ33fAighpNhkDK0kqsgJtBFhssP2UgIYxNOw19Nk4g8MOXQaJC23NKyO2mgXYCqMzEPq38/9mokCINzohlHnxVUEwtQT0ZQ5Kx8kSsawg1kd+CFDtYlYqdgq80oe+n7p7jeDVnbNJNjVmi8qBnsJoXfvr9EC9htwcqm9b9wsh+6eVBkv3FaGmM9rxbSrUW20TjlQv5zEEMaHCImt7r5/qqsKb+qVS5o63czhasMM+/G2K2FlWmgWxcOOwL+wZkfr2MqDVHxM5oQ2AnVznGCdmEyrv2xjdtfb01PfK4xuXrMfnE2fDn+eg2gMKxgKSz9H7W9ouputMGUkMqSYZu5u3Rhy92SXjbwUllUq32ymsZOJ+lCy8l3g4ltF7XXRE9g5vR/LYWicw4v7wt7hG9DC3es9gQnV9DFwD1JH6ieapckZFrvFBQleCi1gg5Ic8vPc7bqGhhLbsU4zssabbNCoUIJkVCkC7bfCH33NS8iDQ3386jo6Dd2vCuKlgk9lIHzWM6QoroY+moAcFRjnbgzcfNRyZOvMhbLUlEnN9Jrg/KOAMKPVLD9OPNnbUkfQsNZ8bCpAv0f6FTYbYVclNFEM9BdHqUhD2g5ttfpw=
-  bucket: "travis-ci-test"
-  region: eu-central-1
-  upload-dir: "travis-builds"
   skip_cleanup: true
-  local-dir: "$BUILD_OUTDIR"
-  on:
-    all_branches: true
+  - provider: s3
+    access_key_id: "AKIAJMYNLF4ZOI5BZVIQ"
+    secret_access_key:
+      secure: DEvDLzrRuUiprXnSxeq4uQRb1LokqwY94Ko8OAhqhmePctddJEuT+hIg08kDfQdxDVX7NnmZ33fAighpNhkDK0kqsgJtBFhssP2UgIYxNOw19Nk4g8MOXQaJC23NKyO2mgXYCqMzEPq38/9mokCINzohlHnxVUEwtQT0ZQ5Kx8kSsawg1kd+CFDtYlYqdgq80oe+n7p7jeDVnbNJNjVmi8qBnsJoXfvr9EC9htwcqm9b9wsh+6eVBkv3FaGmM9rxbSrUW20TjlQv5zEEMaHCImt7r5/qqsKb+qVS5o63czhasMM+/G2K2FlWmgWxcOOwL+wZkfr2MqDVHxM5oQ2AnVznGCdmEyrv2xjdtfb01PfK4xuXrMfnE2fDn+eg2gMKxgKSz9H7W9ouputMGUkMqSYZu5u3Rhy92SXjbwUllUq32ymsZOJ+lCy8l3g4ltF7XXRE9g5vR/LYWicw4v7wt7hG9DC3es9gQnV9DFwD1JH6ieapckZFrvFBQleCi1gg5Ic8vPc7bqGhhLbsU4zssabbNCoUIJkVCkC7bfCH33NS8iDQ3386jo6Dd2vCuKlgk9lIHzWM6QoroY+moAcFRjnbgzcfNRyZOvMhbLUlEnN9Jrg/KOAMKPVLD9OPNnbUkfQsNZ8bCpAv0f6FTYbYVclNFEM9BdHqUhD2g5ttfpw=
+    bucket: "travis-ci-test"
+    region: eu-central-1
+    upload-dir: "travis-builds"
+    local-dir: "$BUILD_OUTDIR"
+    on:
+      all_branches: true
+  - provider: script
+    script: ./libs/Crashlytics.framework/submit $FABRIC_API_KEY $FABRIC_BUILD_SECRET -ipaPath "$BUILD_OUTDIR/$APP_NAME.ipa"
+    on:
+      all_branches: true
