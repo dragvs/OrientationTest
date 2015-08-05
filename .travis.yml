@@ -35,8 +35,7 @@ deploy:
   secret_access_key:
     secure: DEvDLzrRuUiprXnSxeq4uQRb1LokqwY94Ko8OAhqhmePctddJEuT+hIg08kDfQdxDVX7NnmZ33fAighpNhkDK0kqsgJtBFhssP2UgIYxNOw19Nk4g8MOXQaJC23NKyO2mgXYCqMzEPq38/9mokCINzohlHnxVUEwtQT0ZQ5Kx8kSsawg1kd+CFDtYlYqdgq80oe+n7p7jeDVnbNJNjVmi8qBnsJoXfvr9EC9htwcqm9b9wsh+6eVBkv3FaGmM9rxbSrUW20TjlQv5zEEMaHCImt7r5/qqsKb+qVS5o63czhasMM+/G2K2FlWmgWxcOOwL+wZkfr2MqDVHxM5oQ2AnVznGCdmEyrv2xjdtfb01PfK4xuXrMfnE2fDn+eg2gMKxgKSz9H7W9ouputMGUkMqSYZu5u3Rhy92SXjbwUllUq32ymsZOJ+lCy8l3g4ltF7XXRE9g5vR/LYWicw4v7wt7hG9DC3es9gQnV9DFwD1JH6ieapckZFrvFBQleCi1gg5Ic8vPc7bqGhhLbsU4zssabbNCoUIJkVCkC7bfCH33NS8iDQ3386jo6Dd2vCuKlgk9lIHzWM6QoroY+moAcFRjnbgzcfNRyZOvMhbLUlEnN9Jrg/KOAMKPVLD9OPNnbUkfQsNZ8bCpAv0f6FTYbYVclNFEM9BdHqUhD2g5ttfpw=
   bucket: "travis-ci-test"
-  region: Frankfurt
-  endpoint: s3-us-west-2.amazonaws.com
+  region: eu-central-1
   upload-dir: "travis-builds"
   skip_cleanup: true
   local-dir: "$BUILD_OUTDIR"
