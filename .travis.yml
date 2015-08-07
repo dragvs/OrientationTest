@@ -6,7 +6,8 @@ before_script:
 - ./scripts/import-keys.sh
 script:
 - set -o pipefail && xcodebuild -project OrientationTest.xcodeproj -scheme OrientationTest
-  -configuration Debug -sdk iphoneos -derivedDataPath "$DERIVED_DATA_DIR" build ONLY_ACTIVE_ARCH=NO | xcpretty -c
+  -configuration Debug -sdk iphoneos -derivedDataPath "$DERIVED_DATA_DIR" build 
+  ONLY_ACTIVE_ARCH=NO CUSTOM_BUILD_NUMBER="$TRAVIS_BUILD_NUMBER" | xcpretty -c
 - xcrun -log -sdk iphoneos PackageApplication "$BUILD_OUTDIR/$APP_NAME.app" -o "$BUILD_OUTDIR/$APP_NAME.ipa"
   -s "$SIGNING_IDENTITY" -embed "$PWD/$APP_ID.mobileprovision"
 after_script:
@@ -31,6 +32,11 @@ env:
 before_deploy:
 - zip -r $APP_ID.zip "$BUILD_OUTDIR"
 deploy:
+  - provider: script
+    script: ./libs/Crashlytics.framework/submit $FABRIC_API_KEY $FABRIC_BUILD_SECRET -ipaPath "$BUILD_OUTDIR/$APP_NAME.ipa"
+    skip_cleanup: true
+    on:
+      all_branches: true
   - provider: s3
     access_key_id: "AKIAJMYNLF4ZOI5BZVIQ"
     secret_access_key:
@@ -39,11 +45,6 @@ deploy:
     region: eu-central-1
     upload-dir: "travis-builds"
     local-dir: "$BUILD_OUTDIR"
-    skip_cleanup: true
-    on:
-      all_branches: true
-  - provider: script
-    script: ./libs/Crashlytics.framework/submit $FABRIC_API_KEY $FABRIC_BUILD_SECRET -ipaPath "$BUILD_OUTDIR/$APP_NAME.ipa"
     skip_cleanup: true
     on:
       all_branches: true

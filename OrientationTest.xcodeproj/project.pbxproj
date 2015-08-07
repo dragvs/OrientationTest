@@ -195,6 +195,7 @@
 				5790164B1B6A3A79001C3D7C /* Sources */,
 				5790164C1B6A3A79001C3D7C /* Frameworks */,
 				5790164D1B6A3A79001C3D7C /* Resources */,
+				572FCF411B74CBA70080D330 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -290,6 +291,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		572FCF411B74CBA70080D330 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script sets version information in the Info.plist of a target to the version\n# as returned by 'git describe'.\n# Info: http://zargony.com/2014/08/10/automatic-versioning-in-xcode-with-git-describe\nset -e\n\nBUILD_NUMBER=${CUSTOM_BUILD_NUMBER}\n\nif [ -z \"$BUILD_NUMBER\" ]; then\n  echo \"No build number is set, skipping version update\"\n  exit 0\nfi\n\nSOURCE_PLIST_FILE=\"${PROJECT_DIR}/${INFOPLIST_FILE}\"\necho \"Source plist file: ${SOURCE_PLIST_FILE}\"\n\nBUNDLE_VERSION=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${SOURCE_PLIST_FILE}\" 2>/dev/null)\n\nif [ -z \"${BUNDLE_VERSION}\" ]; then\n  echo \"Source plist doesn't contain key: \\\"CFBundleVersion\\\"\"\n  exit 1\nfi\n\nVERSION=\"${BUNDLE_VERSION}.${BUILD_NUMBER}\"\nTARGET_PLIST_FILE=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\necho \"Updating version to: ${VERSION}\"\necho \"Target plist file: ${TARGET_PLIST_FILE}\"\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion ${VERSION}\" -c \"Set :CFBundleShortVersionString ${VERSION}\" \"${TARGET_PLIST_FILE}\"\n/usr/bin/plutil -convert ${INFOPLIST_OUTPUT_FORMAT}1 \"${TARGET_PLIST_FILE}\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion ${VERSION}\" -c \"Set :CFBundleShortVersionString ${VERSION}\" \"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5790164B1B6A3A79001C3D7C /* Sources */ = {
