@@ -195,7 +195,7 @@
 				5790164B1B6A3A79001C3D7C /* Sources */,
 				5790164C1B6A3A79001C3D7C /* Frameworks */,
 				5790164D1B6A3A79001C3D7C /* Resources */,
-				572FCF411B74CBA70080D330 /* ShellScript */,
+				572FCF411B74CBA70080D330 /* Update Version */,
 			);
 			buildRules = (
 			);
@@ -293,13 +293,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		572FCF411B74CBA70080D330 /* ShellScript */ = {
+		572FCF411B74CBA70080D330 /* Update Version */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Update Version";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
